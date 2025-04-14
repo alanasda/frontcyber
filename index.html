@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Cadastro CyberDigital</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div class="scanline-overlay"></div>
+
+  <div class="intro-loader">
+    <div class="logo-wrapper">
+      <svg class="logo" width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="100" height="100" rx="12" fill="#FF9500"/>
+        <path d="M35 45H55V75H35V45Z" fill="#1A1A1A"/>
+        <path d="M65 45H85V75H65V45Z" fill="#1A1A1A"/>
+        <path d="M35 85H85V95H35V85Z" fill="#1A1A1A"/>
+      </svg>
+      <h1 class="intro-title">CyberDigital</h1>
+    </div>
+    <div class="loader">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <div class="container" id="container">
+    <div class="form-container">
+      <!-- Login -->
+      <div class="form-section active" id="login-section">
+        <form id="login-form">
+          <h2>Entrar // CyberDigital</h2>
+          <div id="login-error" class="error-container" style="display: none;"></div>
+
+          <div class="input-group">
+            <input type="email" id="login-email" required placeholder=" " autocomplete="email" />
+            <label for="login-email">Email_</label>
+          </div>
+          <div class="input-group">
+            <input type="password" id="login-password" required placeholder=" " autocomplete="current-password" />
+            <label for="login-password">Senha_</label>
+          </div>
+          <button type="submit" class="btn">
+            <span class="spinner"></span>
+            <span><span class="glitch" data-text="Login">Login</span></span>
+          </button>
+          <p class="switch-link">
+            Sem acesso? <button type="button" id="show-register">> Criar_Conta</button>
+          </p>
+        </form>
+      </div>
+
+      <!-- Cadastro -->
+      <div class="form-section" id="register-section">
+        <form id="register-form">
+          <h2>Criar Conta //</h2>
+          <div id="register-error" class="error-container" style="display: none;"></div>
+
+          <div class="input-group">
+            <input type="text" id="register-fullname" required placeholder=" " autocomplete="name" />
+            <label for="register-fullname">Nome_Completo_</label>
+          </div>
+          <div class="input-group">
+            <input type="email" id="register-email" required placeholder=" " autocomplete="email" />
+            <label for="register-email">Email_</label>
+          </div>
+          <div class="input-group">
+            <input type="password" id="register-password" required placeholder=" " autocomplete="new-password" />
+            <label for="register-password">Criar_Senha_</label>
+            <span class="password-toggle" id="register-password-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </span>
+          </div>
+          <button type="submit" class="btn">
+            <span class="spinner"></span>
+            <span><span class="glitch" data-text="Criar">Criar</span></span>
+          </button>
+          <p class="switch-link">
+            Já tem acesso? <button type="button" id="show-login">> Fazer_Login</button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

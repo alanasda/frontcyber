@@ -1,0 +1,441 @@
+
+
+
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CYBER.DIGITAL</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<style>
+    :root {
+      --primary: #00ffff;   /* azul neon claro */
+      --secondary: #003b55; /* azul petróleo escuro */
+      --theme-image: url('https://storage.googleapis.com/a1aa/image/3We6JW0tVPh9c5P1xWbB8qCbt1WMeV_yFjQChn9NlFo.jpg');
+    }
+  
+    .bg-black {
+      background-color: black !important; /* azul neon escuro brabo */
+    }
+  
+    body {
+      background-color: black; /* azul neon escuro suave */
+      color: white;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+  
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+    }
+  
+    .hero-banner {
+      height: 70vh;
+      min-height: 500px;
+      position: relative;
+    }
+  
+    .hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  
+    .module-container {
+      scroll-behavior: smooth;
+    }
+  
+    .module-container::-webkit-scrollbar {
+      height: 8px;
+    }
+  
+    .module-container::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+  
+    .module-container::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+  
+    .theme-btn {
+      position: fixed;
+      bottom: 150px;
+      right: 20px;
+      z-index: 1000;
+      background: var(--primary);
+      color: #001f2d;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px var(--primary);
+      border: none;
+      transition: all 0.3s ease;
+    }
+  
+    .theme-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--primary);
+    }
+  
+    .module-cover {
+      border: 1px solid var(--primary);
+      transition: all 0.3s ease;
+      background-color: #002b3d; /* tom complementar do azul escuro neon */
+    }
+  
+    @keyframes floatUp {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+  
+    @keyframes floatDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+  
+    #modulesContainer > div:nth-child(even) {
+      animation: floatUp 3s ease-in-out infinite;
+    }
+  
+    #modulesContainer > div:nth-child(odd) {
+      animation: floatDown 3s ease-in-out infinite;
+    }
+  
+    .module-cover.locked {
+      position: relative;
+      cursor: pointer;
+    }
+  
+    .module-cover.locked::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 0.75rem;
+    }
+  
+    .module-cover.locked::before {
+      content: "\f023";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 2.5rem;
+      z-index: 10;
+    }
+  
+    .module-cover.locked:hover::before {
+      content: "Desbloquear Módulo";
+      font-size: 1.1rem;
+      font-family: sans-serif;
+      white-space: nowrap;
+    }
+  
+    #moduleModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .modal-content {
+      background: #002b3d;
+      border: 2px solid var(--primary);
+      border-radius: 15px;
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+  
+    .badge-comprado {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #10B981;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      z-index: 10;
+    }
+  
+    /* Temas */
+    .theme-1 { --primary: #FF6B00; --secondary: #FFD600; }
+    .theme-2 { --primary: #d7fe1f; --secondary: #d7fe1f; }
+    .theme-3 { --primary: #4ee487; --secondary: #4ee487; }
+    .theme-4 { --primary: #29b0f7; --secondary:  #29b0f7; }
+    
+  </style>
+</head>
+<body class="bg-black text-white theme-1">
+<button class="theme-btn" onclick="changeTheme()">Trocar Tema</button>
+<header class="fixed w-full top-0 z-50 bg-black/90 backdrop-blur-md py-4 px-6 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full fade-in" id="theme-logo" style="background-color: var(--primary); animation-delay: 0.5s;"></div>
+<nav class="desktop-nav flex gap-6">
+<a class="transition text-[color:var(--primary)]" href="#"></a>
+<a class="transition text-[color:var(--primary)]" href="#"></a>
+<a class="transition text-[color:var(--primary)]" href="#"></a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative fade-in" style="animation-delay: 1.5s;">
+<input class="bg-gray-800 rounded-full py-2 px-4 pr-10 w-48 text-sm" id="moduleSearch" placeholder="Pesquisar módulo" type="search"/>
+<i class="fas fa-search absolute right-3 top-3 text-[color:var(--primary)]"></i>
+</div>
+<i class="fas fa-user-circle text-xl text-[color:var(--primary)] cursor-pointer fade-in" onclick="togglePerfilMenu()" style="animation-delay: 1.7s;"></i>
+</div>
+</header>
+<section class="hero-banner">
+<div class="absolute inset-0 bg-black/60"></div>
+<img alt="Background Cyber Digital" class="absolute top-0 left-0 w-full h-full object-contain" src="nfundo.png"/>
+<div class="relative container mx-auto px-4 h-full flex items-center">
+<div class="max-w-2xl">
+<h1 class="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-[color:var(--primary)] to-[color:var(--secondary)] bg-clip-text text-transparent">
+          Bem vindos(A) 
+        </h1>
+<p class="text-xl md:text-2xl text-gray-300 mb-8">
+          Acesse o modulo que você adquirió
+        </p>
+<button class="bg-gradient-to-r from-[color:var(--primary)] to-[color:var(--secondary)] text-black px-8 py-3 rounded-full hover:shadow-lg hover:shadow-[color:var(--primary)]/30 transition">
+          Acesse abaixo
+        </button>
+</div>
+</div>
+</section>
+<main class="container mx-auto px-4 py-12 mt-16">
+<section class="mb-16">
+<div class="flex items-center gap-4 mb-8">
+<div class="h-1 w-12 bg-gradient-to-r from-[color:var(--primary)] to-[color:var(--secondary)]"></div>
+<h2 class="text-2xl font-bold">Módulos do Curso</h2>
+</div>
+<div class="module-container flex overflow-x-auto pb-6 gap-6 scroll-smooth" id="modulesContainer">
+<!-- MÓDULO 1 - COMPRADO -->
+<div class="relative min-w-[300px] bg-gray-900 rounded-xl overflow-hidden module-cover locked" data-module="11">
+<div class="aspect-[3/4]">
+<img alt="Módulo 1" class="w-full h-full object-cover" src="11.jpeg"/>
+</div>
+</div>
+<!-- MÓDULO 2 - BLOQUEADO -->
+<div class="relative min-w-[300px] bg-gray-900 rounded-xl overflow-hidden module-cover locked" data-module="12">
+<div class="aspect-[3/4]">
+<img alt="Módulo 2" class="w-full h-full object-cover" src="12.jpeg"/>
+</div>
+</div>
+<!-- MÓDULO 3 - BLOQUEADO -->
+<div class="relative min-w-[300px] bg-gray-900 rounded-xl overflow-hidden module-cover locked" data-module="13">
+<div class="aspect-[3/4]">
+<img alt="Módulo 3" class="w-full h-full object-cover" src="13.jpeg"/>
+</div>
+</div>
+<!-- MÓDULO 4 - BLOQUEADO -->
+<div class="relative min-w-[300px] bg-gray-900 rounded-xl overflow-hidden module-cover locked" data-module="14">
+<div class="aspect-[3/4]">
+<img alt="Módulo 4" class="w-full h-full object-cover" src="14.jpeg"/>
+</div>
+</div>
+</div>
+</section>
+<div class="bg-gray-900 rounded-xl p-6 mb-12">
+<div class="flex items-center justify-between mb-4">
+<h4 class="text-lg font-bold">Progresso do Curso</h4>
+<span class="text-[color:var(--primary)]" id="progressPercentage">0%</span>
+</div>
+<div class="w-full bg-gray-800 rounded-full h-3">
+<div class="bg-gradient-to-r from-[color:var(--primary)] to-[color:var(--secondary)] h-full rounded-full w-0 transition-all duration-500" id="progressBar"></div>
+</div>
+</div>
+<section class="mb-16">
+<h3 class="text-2xl font-bold mb-4">Aulas Concluídas</h3>
+<ul class="list-disc pl-5 text-gray-300" id="completedList">
+<!-- Itens dinâmicos -->
+</ul>
+</section>
+</main>
+<footer class="fixed bottom-0 w-full bg-black/90 backdrop-blur-md border-t border-gray-800 mobile-nav">
+<div class="flex justify-around items-center h-16">
+<a class="text-center px-2 py-1 text-sm text-[color:var(--primary)]" href="#">
+<i class="fas fa-home block text-xl mb-1"></i>Home</a>
+<a class="text-center px-2 py-1 text-sm text-[color:var(--primary)]" href="#">
+<i class="fas fa-handshake block text-xl mb-1"></i>Sócio</a>
+<a class="text-center px-2 py-1 text-sm text-[color:var(--primary)]" href="#">
+<i class="fas fa-trophy block text-xl mb-1"></i>Prêmios</a>
+</div>
+</footer>
+<!-- MODAL DE DESBLOQUEIO -->
+<div id="moduleModal">
+<div class="modal-content">
+<h3 class="text-2xl font-bold mb-4 text-[color:var(--primary)]">Desbloquear Módulo</h3>
+<p class="mb-6">Deseja adquirir o módulo <span class="font-bold" id="moduleName">[NOME]</span>?</p>
+<div class="flex gap-4 justify-center">
+<button class="px-6 py-2 border border-gray-600 rounded-lg" onclick="closeModal()">Cancelar</button>
+<button class="px-6 py-2 bg-gradient-to-r from-[color:var(--primary)] to-[color:var(--secondary)] text-black rounded-lg font-bold" onclick="purchaseModule()">Adquirir Já</button>
+</div>
+</div>
+</div>
+<script>
+    // Sistema de Temas
+    let storedTheme = localStorage.getItem("theme");
+    let currentTheme = storedTheme ? parseInt(storedTheme) : 1;
+    const totalThemes = 4;
+    document.body.className = `bg-black text-white theme-${currentTheme}`;
+    
+    function changeTheme() {
+      currentTheme = currentTheme % totalThemes + 1;
+      document.body.className = `bg-black text-white theme-${currentTheme}`;
+      localStorage.setItem("theme", currentTheme);
+      updateThemeElements();
+    }
+    
+    function updateThemeElements() {
+      const logo = document.getElementById('theme-logo');
+      logo.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--primary');
+      document.querySelectorAll('.module-cover').forEach(el => {
+        el.style.borderColor = getComputedStyle(document.body).getPropertyValue('--primary');
+      });
+    }
+
+    // Sistema de Progresso
+    let progress = parseInt(localStorage.getItem("progress")) || 0;
+    const progressBar = document.getElementById('progressBar');
+    const progressPercentage = document.getElementById('progressPercentage');
+    
+    function updateProgressDisplay() {
+      progressBar.style.width = `${progress}%`;
+      progressPercentage.textContent = `${progress}%`;
+    }
+
+    // Sistema de Aulas Concluídas
+    let completedLessons = JSON.parse(localStorage.getItem("completedLessons")) || [];
+    
+    function addCompletedLesson(lesson) {
+      if(!completedLessons.includes(lesson)) {
+        completedLessons.push(lesson);
+        localStorage.setItem("completedLessons", JSON.stringify(completedLessons));
+        renderCompletedLessons();
+      }
+    }
+    
+    function renderCompletedLessons() {
+      const list = document.getElementById('completedList');
+      list.innerHTML = "";
+      completedLessons.forEach(item => {
+        let li = document.createElement("li");
+        li.textContent = item;
+        list.appendChild(li);
+      });
+    }
+
+    // Sistema de Busca
+    document.getElementById('moduleSearch').addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      document.querySelectorAll('#modulesContainer > div').forEach(module => {
+        const title = module.querySelector('img').alt.toLowerCase();
+        module.style.display = title.includes(searchTerm) ? "" : "none";
+      });
+    });
+
+    // Controle de Módulos Bloqueados
+    let selectedModule = null;
+
+    document.querySelectorAll('.module-cover.locked').forEach(module => {
+      module.addEventListener('click', () => {
+        selectedModule = module.getAttribute('data-module');
+        document.getElementById('moduleName').textContent = `Módulo ${selectedModule}`;
+        document.getElementById('moduleModal').style.display = 'flex';
+      });
+    });
+
+    function closeModal() {
+      document.getElementById('moduleModal').style.display = 'none';
+    }
+
+    function purchaseModule() {
+      window.location.href = `checkout.html?module=${selectedModule}`;
+    }
+
+    // Fecha modal ao clicar fora
+    window.addEventListener('click', (e) => {
+      if (e.target === document.getElementById('moduleModal')) {
+        closeModal();
+      }
+    });
+
+    // Inicialização
+    updateThemeElements();
+    updateProgressDisplay();
+    renderCompletedLessons();
+  </script>
+<!-- MENU DE PERFIL -->
+<div class="hidden absolute right-6 top-20 w-72 bg-gray-900 text-white border border-[color:var(--primary)] rounded-xl shadow-lg z-50 p-4" id="perfilMenu">
+<h3 class="font-bold text-[color:var(--primary)] mb-2">Sua Conta</h3>
+<p class="text-sm mb-4">Email: <span id="perfilEmail">carregando...</span></p>
+<button class="w-full bg-[color:var(--primary)] text-black font-bold py-2 rounded mb-2" onclick="trocarSenha()">Trocar senha</button>
+<button class="w-full border border-[color:var(--primary)] text-[color:var(--primary)] font-bold py-2 rounded" onclick="logout()">Sair</button>
+</div>
+<script>
+function togglePerfilMenu() {
+  const menu = document.getElementById("perfilMenu");
+  menu.classList.toggle("hidden");
+  const email = localStorage.getItem("email") || "desconhecido";
+  document.getElementById("perfilEmail").textContent = email;
+}
+
+function logout() {
+  localStorage.clear();
+  window.location.href = "/login.html";
+}
+
+function trocarSenha() {
+  alert("Funcionalidade em desenvolvimento.");
+}
+
+// Desbloqueio de módulos com base nos dados salvos
+const modulosLiberados = JSON.parse(localStorage.getItem("modulos") || "[]");
+
+document.querySelectorAll(".module-cover").forEach(modulo => {
+  const id = parseInt(modulo.getAttribute("data-module"));
+  if (modulosLiberados.includes(id)) {
+    modulo.classList.remove("locked");
+    modulo.innerHTML = `
+      <a href="modulo${id}.html" class="block">
+        <div class="aspect-[3/4]">
+          <img src="${id}.jpeg" class="w-full h-full object-cover" alt="Módulo ${id}">
+        </div>
+      </a>
+      <div class="badge-comprado">
+        <i class="fas fa-check mr-1"></i>COMPRADO
+      </div>
+    `;
+  }
+});
+</script>
+</body>
+</html>

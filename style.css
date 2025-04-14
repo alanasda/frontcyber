@@ -1,0 +1,568 @@
+/* Removed CSS from index.html */
+/* Import Fonts - Added Orbitron for a tech feel */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap');
+
+:root {
+    /* CyberDigital Orange/Yellow/Black Theme */
+    --primary-color: #ff9500; /* Vibrant Orange */
+    --secondary-color: #ffee00; /* Electric Yellow */
+    --accent-color: #ff5e00; /* Deeper Orange/Reddish */
+    --dark-color: #1a1a1a; /* Near Black */
+    --dark-grey: #2c2c2c; /* Dark Grey */
+    --light-grey: #cccccc; /* Light Grey Text */
+    --white: #fff;
+
+    --text-color: var(--light-grey);
+    --background-color: var(--dark-color);
+    --error-color: #ff3b30; /* Brighter Red */
+    --success-color: #34c759; /* Brighter Green */
+    --border-radius: 8px; /* Sharper edges */
+    --box-shadow: 0 8px 25px rgba(255, 149, 0, 0.3), 0 4px 10px rgba(0, 0, 0, 0.4); /* Orange glow + dark shadow */
+    --transition-speed-fast: 0.5s; /* Slightly faster flip */
+    --transition-speed-med: 0.6s;
+    --transition-speed-slow: 0.7s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Using Orbitron for headings, Poppins for body */
+    font-family: 'Poppins', sans-serif;
+    /* Animated Gradient Background - Cyber Theme */
+    background: linear-gradient(135deg, var(--dark-color), #331a00, var(--accent-color), var(--secondary-color), #4d2600, var(--dark-color));
+    background-size: 600% 600%; /* Larger size for slower, more complex movement */
+    animation: gradientBG 25s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-color);
+    overflow: hidden; /* Prevent scrollbars */
+    position: relative; /* Needed for overlay */
+}
+
+/* Scanline Overlay Effect */
+.scanline-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 6px 100%; /* Fine lines */
+    z-index: 2; /* Above background, below content */
+    pointer-events: none; /* Allow clicks through */
+    animation: scanlines 0.2s linear infinite;
+}
+
+@keyframes scanlines {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 4px; } /* Adjust value to change speed */
+}
+
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    background-color: rgba(26, 26, 26, 0.9); /* Semi-transparent dark background */
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+    border: 1px solid rgba(255, 149, 0, 0.2); /* Subtle orange border */
+    padding: 50px 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 440px;
+    text-align: center;
+    position: relative;
+    perspective: 1300px; /* Increased perspective */
+    overflow: visible;
+    transition: transform 0.2s ease-out, box-shadow 0.3s ease; /* Added shadow transition */
+    z-index: 10; /* Above overlay */
+    /* Intro Animation */
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+    animation: containerIntro 0.8s 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes containerIntro {
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.container:hover {
+     box-shadow: 0 12px 35px rgba(255, 149, 0, 0.5), 0 6px 15px rgba(0, 0, 0, 0.5); /* Brighter glow on hover */
+}
+
+
+.form-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 480px;
+    transition: transform var(--transition-speed-fast) cubic-bezier(0.68, -0.6, 0.32, 1.6); /* Adjusted Bezier for bounce */
+    transform-style: preserve-3d;
+}
+
+.form-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+    transition: opacity var(--transition-speed-fast) ease-in-out, transform var(--transition-speed-fast) ease-in-out;
+    opacity: 1;
+}
+
+#register-section {
+    transform: rotateY(180deg) translateZ(2px); /* Increased Z offset */
+    opacity: 1;
+}
+#login-section {
+     transform: translateZ(2px);
+}
+
+.form-section h2 {
+    font-family: 'Orbitron', sans-serif; /* Tech font */
+    margin-bottom: 35px;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 2.2em; /* Slightly larger */
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(255, 149, 0, 0.5); /* Orange text glow */
+}
+
+.input-group {
+    margin-bottom: 28px;
+    width: 100%;
+    position: relative;
+}
+
+.input-group label {
+    font-family: 'Orbitron', sans-serif; /* Tech font for labels */
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 400;
+    text-align: left;
+    font-size: 0.9em; /* Slightly smaller */
+    color: var(--light-grey);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: absolute;
+    top: 16px;
+    left: 18px;
+    pointer-events: none;
+    background-color: var(--dark-grey); /* Match input background */
+    padding: 0 6px;
+    opacity: 0.7;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid rgba(255, 149, 0, 0.3); /* Orange border */
+    border-radius: var(--border-radius);
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    background-color: var(--dark-grey); /* Dark input background */
+    color: var(--white); /* White text in input */
+    position: relative;
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif; /* Keep Poppins for input text */
+}
+
+/* Input focus/filled animation */
+.input-group input:focus + label,
+.input-group input:valid + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -11px;
+    left: 12px;
+    font-size: 0.75em;
+    color: var(--secondary-color); /* Yellow label when active */
+    font-weight: 700;
+    opacity: 1;
+    text-shadow: 0 0 5px rgba(255, 238, 0, 0.7); /* Yellow glow */
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--secondary-color); /* Yellow border on focus */
+    background-color: #3a3a3a; /* Slightly lighter background on focus */
+    box-shadow: 0 0 0 4px rgba(255, 238, 0, 0.2); /* Yellow glow */
+}
+
+/* Styles for password toggle icon */
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--light-grey);
+    opacity: 0.7;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.password-toggle:hover {
+    opacity: 1;
+    color: var(--secondary-color);
+}
+
+.btn {
+    font-family: 'Orbitron', sans-serif; /* Tech font */
+    background: linear-gradient(60deg, var(--primary-color), var(--accent-color));
+    color: var(--dark-color); /* Dark text on bright button */
+    padding: 16px 30px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1.2em; /* Larger text */
+    font-weight: 700; /* Bolder */
+    width: 100%;
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    margin-top: 25px;
+    box-shadow: 0 6px 18px rgba(255, 149, 0, 0.45); /* More pronounced orange shadow */
+    letter-spacing: 1.5px; /* Wider spacing */
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase; /* Uppercase text */
+}
+
+
+.btn:hover {
+    background: linear-gradient(60deg, var(--secondary-color), var(--primary-color)); /* Shift to yellow */
+    color: var(--dark-color);
+    transform: translateY(-5px) scale(1.04); /* More lift */
+    box-shadow: 0 12px 25px rgba(255, 238, 0, 0.5); /* Yellow shadow */
+}
+
+.btn:active {
+    transform: translateY(-2px) scale(0.98); /* Adjusted active scale */
+    box-shadow: 0 4px 10px rgba(255, 149, 0, 0.4);
+}
+
+/* Glitch effect styles */
+.glitch {
+    position: relative;
+    display: inline-block;
+}
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(60deg, var(--secondary-color), var(--primary-color)); /* Match hover bg */
+     -webkit-background-clip: text; /* Clip background to text */
+    background-clip: text;
+    color: transparent; /* Hide original pseudo-element text color */
+    overflow: hidden;
+    clip-path: inset(50% 0 50% 0); /* Start hidden */
+    opacity: 0;
+}
+.btn:hover .glitch::before {
+    animation: glitch-anim-1 0.3s infinite linear alternate-reverse;
+    text-shadow: -2px 0 #ff00c1; /* Magenta */
+    opacity: 0.8;
+}
+.btn:hover .glitch::after {
+    animation: glitch-anim-2 0.3s infinite linear alternate-reverse;
+     text-shadow: 2px 0 #00fff9; /* Cyan */
+     opacity: 0.8;
+}
+
+@keyframes glitch-anim-1 {
+    0% { clip-path: inset(31% 0 62% 0); transform: translate(-1px, 1px); }
+    100% { clip-path: inset(68% 0 12% 0); transform: translate(1px, -1px); }
+}
+@keyframes glitch-anim-2 {
+     0% { clip-path: inset(80% 0 8% 0); transform: translate(1px, -1px); }
+     100% { clip-path: inset(15% 0 77% 0); transform: translate(-1px, 1px); }
+}
+
+
+/* Spinner for loading state */
+.btn .spinner {
+    display: none;
+    position: absolute;
+    left: 25px; /* Adjusted position */
+    top: 50%;
+    transform: translateY(-50%);
+    border: 3px solid rgba(0, 0, 0, 0.3); /* Darker spinner trail */
+    border-radius: 50%;
+    border-top-color: var(--dark-color); /* Dark spinner head */
+    width: 18px;
+    height: 18px;
+    animation: spin 1s linear infinite;
+    z-index: 5; /* Ensure spinner is above text */
+}
+
+.btn.loading .spinner {
+    display: inline-block;
+}
+.btn.loading span { /* Keep text slightly visible but behind spinner */
+   opacity: 0.5;
+}
+
+@keyframes spin {
+    to { transform: translateY(-50%) rotate(360deg); }
+}
+
+.switch-link {
+    margin-top: 35px; /* More space */
+    font-size: 0.95em;
+}
+
+.switch-link button {
+    font-family: 'Orbitron', sans-serif; /* Tech font */
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 6px 8px;
+    font-size: 1em;
+    transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+.switch-link button:hover {
+    color: var(--secondary-color); /* Yellow on hover */
+    text-shadow: 0 0 8px rgba(255, 238, 0, 0.7); /* Yellow glow */
+    transform: translateY(-2px);
+}
+
+/* Trigger the 3D rotation */
+.container.register-mode .form-container {
+    transform: rotateY(-180deg);
+}
+
+/* Animation Enhancements */
+.form-section h2,
+.input-group,
+.btn,
+.switch-link {
+    animation: slideFadeIn 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; /* Slower, smoother */
+    opacity: 0;
+    transform: translateY(40px) scale(0.95); /* Start lower/smaller */
+}
+
+/* Apply staggered delays via JS when switching */
+.form-section.active h2 { animation-delay: 0.15s; }
+.form-section.active .input-group:nth-of-type(1) { animation-delay: 0.25s; }
+.form-section.active .input-group:nth-of-type(2) { animation-delay: 0.35s; }
+.form-section.active .input-group:nth-of-type(3) { animation-delay: 0.45s; }
+.form-section.active .btn { animation-delay: 0.55s; }
+.form-section.active .switch-link { animation-delay: 0.65s; }
+
+@keyframes slideFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Intro Loader Styles */
+.intro-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--dark-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease-out;
+}
+
+.intro-loader.hidden {
+    opacity: 0;
+    pointer-events: none; /* Prevent clicks on hidden loader */
+}
+
+.logo-wrapper {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo {
+    animation: logo-pulse 1.5s ease-in-out infinite alternate;
+}
+
+.intro-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5em;
+    color: var(--secondary-color);
+    text-shadow: 0 0 10px rgba(255, 238, 0, 0.8);
+    letter-spacing: 2px;
+    margin-top: 20px;
+    opacity: 0;
+    animation: fadeIn 1s 1.2s forwards;
+}
+
+/* Loader Animation */
+.loader {
+    display: flex;
+    justify-content: center;
+}
+
+.loader span {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: var(--primary-color);
+    margin: 0 10px;
+    border-radius: 50%;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.loader span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loader span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes logo-pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0.7; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.7; }
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    body {
+         /* Simplify background on mobile */
+         background: linear-gradient(135deg, var(--dark-color), var(--accent-color), var(--dark-color));
+         background-size: 300% 300%;
+         animation-duration: 20s;
+    }
+    .scanline-overlay {
+         background-size: 100% 3px, 4px 100%; /* Slightly thicker lines */
+    }
+    .container {
+        padding: 30px 20px;
+        margin: 15px;
+        max-width: calc(100% - 30px);
+        perspective: none;
+        box-shadow: 0 5px 15px rgba(255, 149, 0, 0.25), 0 3px 8px rgba(0, 0, 0, 0.3); /* Adjusted mobile shadow */
+        border: none; /* Remove border on mobile */
+        backdrop-filter: blur(3px); /* Less blur */
+        /* Disable tilt effect reset if it was applied */
+        transform: none !important;
+        transition: none !important;
+    }
+     .form-container {
+         min-height: auto;
+     }
+
+    .form-section {
+        padding: 0 5px;
+    }
+    .form-section h2 {
+        font-size: 1.9em;
+         margin-bottom: 25px;
+    }
+     .btn {
+         padding: 14px 25px;
+         font-size: 1.1em;
+         letter-spacing: 1px;
+     }
+     .input-group input { padding: 14px 15px; }
+     .input-group label { top: 14px; left: 15px; background-color: var(--dark-grey); } /* Ensure label bg matches */
+      .input-group input:focus + label,
+      .input-group input:valid + label,
+      .input-group input:not(:placeholder-shown) + label {
+          top: -10px;
+          left: 10px;
+          font-size: 0.7em;
+      }
+      /* Disable glitch on mobile hover if desired */
+      /*
+      .btn:hover .glitch::before,
+      .btn:hover .glitch::after {
+          animation: none;
+          opacity: 0;
+      }
+      */
+}
+
+/* Responsive Intro Styles */
+@media (max-width: 480px) {
+    .logo-wrapper {
+         margin-bottom: 30px;
+    }
+    .logo {
+        width: 100px;
+        height: 100px;
+    }
+    .intro-title {
+        font-size: 2em;
+        margin-top: 15px;
+    }
+    .loader span {
+        width: 16px;
+        height: 16px;
+        margin: 0 8px;
+    }
+}
+.error-container {
+    width: 100%;
+    margin-bottom: 15px;
+    min-height: 40px;
+}
+
+.error-message, .success-message {
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9em;
+    margin: 10px 0;
+    animation: slideFadeIn 0.3s ease-out;
+}
+
+.error-message {
+    background: rgba(255, 59, 48, 0.15);
+    border: 1px solid #ff3b30;
+    color: #ff3b30;
+}
+
+.success-message {
+    background: rgba(52, 199, 89, 0.15);
+    border: 1px solid #34c759;
+    color: #34c759;
+}
